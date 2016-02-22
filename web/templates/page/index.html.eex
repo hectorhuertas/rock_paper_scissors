@@ -1,4 +1,14 @@
 <div class="jumbotron">
+  <button type="button" id="rock">Rock</button>
+  <button type="button" id="paper">Paper</button>
+  <button type="button" id="scissors">Scissors</button>
+  <h2 id="action">Pick an action</h2>
+</div>
+<div class="jumbotron" id="controls">
+  <button type="button" id="broadcast">broadcast</button>
+  <button type="button" id="state">state</button>
+</div>
+<div class="jumbotron">
   <h2><%= gettext "Welcome to %{name}", name: "Phoenix!" %></h2>
   <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
 </div>

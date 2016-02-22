@@ -54,9 +54,71 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
+let channel = socket.channel("rooms:lobby", {})
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
+  // .receive("ok", resp => { console.log(channel.id(), resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
 
 export default socket
+
+let action= $('#action')
+let rock= $('#rock')
+let paper= $('#paper')
+let scissors= $('#scissors')
+
+let played = false
+
+let setAction = new_action => {
+  // let new_action = event.target.innerText
+  action.text(`${new_action}!`)
+}
+
+// Player plays
+rock.on('click', event => {
+  setAction(event.target.id)
+  played = true
+})
+paper.on('click', event => {
+  setAction(event.target.id)
+  played = true
+})
+scissors.on('click', event => {
+  setAction(event.target.id)
+  played = true
+})
+
+// Game loop
+let play = () => {
+  if (played == false) {
+    setRandomAction()
+  }
+  // action.toggleClass('red')
+  console.log(`Jugada: ${action.text()}`) // a convertir en channel.push
+  played = false
+  // action.toggleClass('red')
+}
+
+// Private
+let setRandomAction = ()=>{
+  let random = Math.floor(Math.random() * 3)
+  let actions = ['rock', 'paper', 'scissors']
+  let next_action = actions[random]
+  setAction(next_action)
+}
+
+// Execution
+console.log('Start Game')
+// setRandomAction()
+// window.setInterval(play, 2000)
+
+$('#broadcast').on('click', event =>{
+  channel.push("bc", {})
+})
+$('#state').on('click', event =>{
+  channel.push("st", {})
+})
+
+channel.on("starter", () => {
+  play()
+})

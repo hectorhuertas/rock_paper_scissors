@@ -2,7 +2,7 @@ defmodule RockPaperScissors.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "rooms:*", RockPaperScissors.RoomChannel
+  channel "rooms:*", RockPaperScissors.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
